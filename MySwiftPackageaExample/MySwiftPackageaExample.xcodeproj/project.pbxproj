@@ -14,6 +14,7 @@
 		2E4EE9B52A39BC8700541B2E /* MySwiftPackageaExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE9B42A39BC8700541B2E /* MySwiftPackageaExampleTests.swift */; };
 		2E4EE9BF2A39BC8700541B2E /* MySwiftPackageaExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE9BE2A39BC8700541B2E /* MySwiftPackageaExampleUITests.swift */; };
 		2E4EE9C12A39BC8700541B2E /* MySwiftPackageaExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4EE9C02A39BC8700541B2E /* MySwiftPackageaExampleUITestsLaunchTests.swift */; };
+		2E4EE9CF2A39BDE400541B2E /* MyFirstSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 2E4EE9CE2A39BDE400541B2E /* MyFirstSwiftPackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E4EE9CF2A39BDE400541B2E /* MyFirstSwiftPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +147,9 @@
 			dependencies = (
 			);
 			name = MySwiftPackageaExample;
+			packageProductDependencies = (
+				2E4EE9CE2A39BDE400541B2E /* MyFirstSwiftPackage */,
+			);
 			productName = MySwiftPackageaExample;
 			productReference = 2E4EE99F2A39BC8300541B2E /* MySwiftPackageaExample.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +222,9 @@
 				Base,
 			);
 			mainGroup = 2E4EE9962A39BC8300541B2E;
+			packageReferences = (
+				2E4EE9CD2A39BDE400541B2E /* XCRemoteSwiftPackageReference "MyFirstSwiftPackage" */,
+			);
 			productRefGroup = 2E4EE9A02A39BC8300541B2E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -612,6 +620,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2E4EE9CD2A39BDE400541B2E /* XCRemoteSwiftPackageReference "MyFirstSwiftPackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alphonsa22/MyFirstSwiftPackage";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E4EE9CE2A39BDE400541B2E /* MyFirstSwiftPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E4EE9CD2A39BDE400541B2E /* XCRemoteSwiftPackageReference "MyFirstSwiftPackage" */;
+			productName = MyFirstSwiftPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2E4EE9972A39BC8300541B2E /* Project object */;
 }

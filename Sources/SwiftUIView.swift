@@ -8,10 +8,10 @@
 import SwiftUI
 
 public struct SwiftUIView: View {
-    
+    var str = ""
   public init() {}
   public var body: some View {
-        Text("MyFirstSwiftPackage Text Sample...")
+        Text(str)
     }
 }
 

@@ -11,7 +11,7 @@ import MyFirstSwiftPackage
 struct ContentView: View {
     var body: some View {
         VStack {
-           SwiftUIView()
+            SwiftUIView(str:"Package Testing....")
         }
         .padding()
     }

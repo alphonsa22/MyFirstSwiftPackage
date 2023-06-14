@@ -9,7 +9,9 @@ import SwiftUI
 
 public struct SwiftUIView: View {
     var str = ""
-  public init() {}
+    public init(str: String? = nil) {
+        self.str = str ?? "No value"
+    }
   public var body: some View {
         Text(str)
     }

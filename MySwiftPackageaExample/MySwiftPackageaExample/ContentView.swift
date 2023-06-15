@@ -12,6 +12,12 @@ struct ContentView: View {
     var body: some View {
         VStack {
             SwiftUIView(str:"Package Testing....")
+            Button {
+                
+            } label: {
+                Text("Click to log")
+            }
+
         }
         .padding()
     }

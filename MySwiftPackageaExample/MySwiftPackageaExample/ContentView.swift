@@ -13,7 +13,7 @@ struct ContentView: View {
         VStack {
             SwiftUIView(str:"Package Testing....")
             Button {
-                
+                Log.d("debug testing")
             } label: {
                 Text("Click to log")
             }

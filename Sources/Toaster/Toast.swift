@@ -36,6 +36,7 @@ public struct ToastView<Content: View>: View {
                      }
                  }
                  .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
+                 Spacer()
              }
          }
      }

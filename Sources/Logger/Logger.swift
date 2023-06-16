@@ -199,8 +199,30 @@ public class Log {
         return fileURL
     }
     
+    public class func getLogFileURLFromFolder() -> URL {
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let logDirectory = documentsDirectory.appendingPathComponent("Logs")
+        
+        // Create the Logs directory if it doesn't exist
+        if !fileManager.fileExists(atPath: logDirectory.path) {
+            do {
+                try fileManager.createDirectory(at: logDirectory, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                fatalError("Failed to create log directory: \(error.localizedDescription)")
+            }
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: Date())
+        let fileName = "\(dateString).log"
+        let fileURL = logDirectory.appendingPathComponent(fileName)
+        return fileURL
+    }
+    
     public  class  func writeLogToFile(log: String) {
-        let fileURL = getLogFileURL()
+        let fileURL = getLogFileURLFromFolder()
         
         do {
 //            try log.write(to: fileURL, atomically: true, encoding: .utf8)

@@ -11,7 +11,7 @@ import SwiftUI
 public struct ToastView<Content: View>: View {
     @Binding var isPresented: Bool
      let content: () -> Content
-     let duration: TimeInterval
+     let duration: TimeInterval 
      
      public init(isPresented: Binding<Bool>, duration: TimeInterval, @ViewBuilder content: @escaping () -> Content) {
          self._isPresented = isPresented

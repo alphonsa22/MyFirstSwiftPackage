@@ -96,7 +96,8 @@ public class Log {
             
             let logObject = "\(Date().toString()) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
             loggers.log(level: .debug, "\(logObject,privacy: .public)")
-            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+//            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+            self.writeLogToFile(log: "\(logObject) \n")
         }
     }
     
@@ -184,6 +185,28 @@ public class Log {
            
         } catch {
             print("JSONSave error of \(error)")
+        }
+    }
+    
+    public  class func getLogFileURL() -> URL {
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: Date())
+        let fileName = "\(dateString).log"
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        return fileURL
+    }
+    
+    public  class  func writeLogToFile(log: String) {
+        let fileURL = getLogFileURL()
+        
+        do {
+            try log.write(to: fileURL, atomically: true, encoding: .utf8)
+            print("Log saved successfully.")
+        } catch {
+            print("Error saving log: \(error.localizedDescription)")
         }
     }
 }

@@ -30,24 +30,26 @@ struct ContentView: View {
             ZStack {
                 VStack {
                     List(0..<20) { index in
-                               Text("Cell \(index)")
-                                   .onTapGesture {
-                                       showToast = true
-                                       selectedRow = index
-                                      }
-                           }
-//                    .padding()
+                        Text("Cell \(index)")
+                            .onTapGesture {
+                                selectedRow = index
+                                showToast = true
+                                print("selected row = \(selectedRow ?? 0)")
+                                
+                            }
+                    }
+                }
+                VStack {
+                    Spacer()
                     
                     ToastView(isPresented: $showToast, duration: 2.0) {
-                                   Text("selected row is \(selectedRow ?? 0)")
-                                       .foregroundColor(.white)
-                               }
-                    .background(Color.pink)
+                        Text("Selected: \(selectedRow ?? 0)")
+                            .foregroundColor(.white)
+                    }
                 }
-                .navigationTitle("List View")
             }
-               }
-        
+            .navigationTitle("List View")
+        }
     }
 }
 

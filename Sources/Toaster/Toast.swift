@@ -19,7 +19,7 @@ public struct ToastView<Content: View>: View {
         GeometryReader { geometry in
             ZStack {
                 VStack {
-                    Spacer()
+//                    Spacer()
                     if isPresented {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(Color.black.opacity(0.7))

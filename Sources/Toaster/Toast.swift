@@ -27,7 +27,7 @@ public struct ToastView<Content: View>: View {
                      if isPresented {
                          RoundedRectangle(cornerRadius: 10)
                              .foregroundColor(Color.black.opacity(0.7))
-                             .frame(width: 200, height: 20)
+                             .frame(width: 200, height: 50)
                              .overlay(content())
                              .transition(.opacity)
                              .onAppear {

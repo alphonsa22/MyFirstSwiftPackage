@@ -20,19 +20,10 @@ struct ContentView: View {
                 Text("Click to log")
             }
             .padding()
-            ToastView(isPresented: $showToast) {
-                VStack {
-                    Text("Toast Message")
-                        .foregroundColor(.white)
-                    Button("Dismiss") {
-                        showToast.toggle()
-                    }
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(5)
-                }
-            }
+            ToastView(isPresented: $showToast, duration: 2.0) {
+                           Text("Toast Message")
+                               .foregroundColor(.white)
+                       }
         }
         
     }

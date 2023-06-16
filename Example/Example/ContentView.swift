@@ -35,7 +35,7 @@ struct ContentView: View {
                                 selectedRow = index
                                 showToast = true
                                 print("selected row = \(selectedRow ?? 0)")
-                                
+                                Log.d("Tapped on listview cell \(index)")
                             }
                     }
                 }

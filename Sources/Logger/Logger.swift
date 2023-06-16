@@ -203,8 +203,27 @@ public class Log {
         let fileURL = getLogFileURL()
         
         do {
-            try log.write(to: fileURL, atomically: true, encoding: .utf8)
-            print("Log saved successfully.")
+//            try log.write(to: fileURL, atomically: true, encoding: .utf8)
+//            print("Log saved successfully.")
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                     if let fileHandle = try? FileHandle(forWritingTo: fileURL) {
+                        if #available(iOS 13.4, *) {
+                             try fileHandle.seekToEnd()
+                         } else {
+                             fileHandle.seekToEndOfFile()
+                             // Fallback on earlier versions
+                         }
+                         if let data = log.data(using: String.Encoding.utf8) {
+                             fileHandle.write(data)
+                         }
+                         fileHandle.closeFile()
+                         print("Log updated successfully.")
+                     }
+                 } else {
+                     try log.write(to: fileURL, atomically: true, encoding: .utf8)
+                     print("Log saved successfully.")
+                 }
+            
         } catch {
             print("Error saving log: \(error.localizedDescription)")
         }

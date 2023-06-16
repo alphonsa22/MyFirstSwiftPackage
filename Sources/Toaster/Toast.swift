@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct ToastView<Content: View>: View {
+public struct ToastView<Content: View>: View {
     @Binding var isPresented: Bool
-    let content: () -> Content
+  public let content: () -> Content
     
-    var body: some View {
+ public var body: some View {
         Group {
             if isPresented {
                 ZStack {

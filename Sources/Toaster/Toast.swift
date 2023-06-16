@@ -15,26 +15,25 @@ public struct ToastView<Content: View>: View {
         self._isPresented = isPresented
         self.content = content
     }
- public var body: some View {
-        Group {
-            if isPresented {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Color.black.opacity(0.7))
-                        .frame(width: 200, height: 100)
-                        .overlay(content())
+    public var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                VStack {
+                    Spacer()
+                    if isPresented {
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(Color.black.opacity(0.7))
+                            .frame(width: 200, height: 100)
+                            .overlay(content())
+                            .transition(.opacity)
+                            .onTapGesture {
+                                withAnimation {
+                                    isPresented = false
+                                }
+                            }
+                    }
                 }
-                .transition(.opacity)
-            }
-        }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                isPresented = true
-            }
-        }
-        .onDisappear {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                isPresented = false
+                .frame(width: geometry.size.width, height: geometry.size.height, alignment: .bottom)
             }
         }
     }

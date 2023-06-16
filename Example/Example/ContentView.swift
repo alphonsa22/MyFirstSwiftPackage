@@ -15,6 +15,7 @@ struct ContentView: View {
 //            SwiftUIView(str:"Package Testing....")
             Button {
                 Log.d("debug testing")
+                showToast.toggle()
             } label: {
                 Text("Click to log")
             }

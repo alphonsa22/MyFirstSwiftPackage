@@ -57,11 +57,12 @@ public class Log {
     ///   - funcName: Name of the function from where the logging is done
     public  class func e( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column,     funcName: String = #function) {
         if isLoggingEnabled {
-//            print("\(Date().toString()) \(LogEvent.error.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) : \(object)")
+            print("\(Date().toString()) \(LogEvent.error.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) : \(object)")
             
             let logObject = "\(Date().toString()) \(LogEvent.error.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) : \(object)"
-            loggers.log(level: .error, "\(logObject,privacy: .public)")
-            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+//            loggers.log(level: .error, "\(logObject,privacy: .public)")
+//            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+            self.writeLogToFile(log: "\(logObject) \n")
         }
     }
     
@@ -75,10 +76,11 @@ public class Log {
     ///   - funcName: Name of the function from where the logging is done
     public class func i ( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function){
         if isLoggingEnabled {
-//            print("\(Date().toString()) \(LogEvent.info.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) : \(object)")
+            print("\(Date().toString()) \(LogEvent.info.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) : \(object)")
             let logObject = "\(Date().toString()) \(LogEvent.info.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) : \(object)"
-            loggers.log(level: .info, "\(logObject,privacy: .public)")
-            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+//            loggers.log(level: .info, "\(logObject,privacy: .public)")
+//            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+            self.writeLogToFile(log: "\(logObject) \n")
         }
     }
     
@@ -92,10 +94,10 @@ public class Log {
     ///   - funcName: Name of the function from where the logging is done
     public  class func d( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
-//            print("\(Date().toString()) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)")
+            print("\(Date().toString()) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)")
             
             let logObject = "\(Date().toString()) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
-            loggers.log(level: .debug, "\(logObject,privacy: .public)")
+//            loggers.log(level: .debug, "\(logObject,privacy: .public)")
 //            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
             self.writeLogToFile(log: "\(logObject) \n")
         }
@@ -113,9 +115,10 @@ public class Log {
         if isLoggingEnabled {
             print("\(Date().toString()) \(LogEvent.verbose.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)")
             
-//            let logObject = "\(Date().toString()) \(LogEvent.verbose.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
+            let logObject = "\(Date().toString()) \(LogEvent.verbose.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
 //            loggers.log(level: .debug, "\(logObject,privacy: .public)")
-//            self.saveLocally(str: "\(object) \n", fileName: "FinLog.log")
+//            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+            self.writeLogToFile(log: "\(logObject) \n")
         }
     }
     
@@ -130,6 +133,10 @@ public class Log {
     public  class func w( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
             print("\(Date().toString()) \(LogEvent.warning.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)")
+            let logObject = "\(Date().toString()) \(LogEvent.warning.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
+//            loggers.log(level: .debug, "\(logObject,privacy: .public)")
+//            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+            self.writeLogToFile(log: "\(logObject) \n")
         }
     }
     
@@ -144,6 +151,10 @@ public class Log {
     public  class func s( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
             print("\(Date().toString()) \(LogEvent.server.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)")
+            let logObject = "\(Date().toString()) \(LogEvent.server.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
+//            loggers.log(level: .debug, "\(logObject,privacy: .public)")
+//            self.saveLocally(str: "\(logObject) \n", fileName: "FinLog.log")
+            self.writeLogToFile(log: "\(logObject) \n")
         }
     }
     
@@ -156,38 +167,7 @@ public class Log {
         let components = filePath.components(separatedBy: "/")
         return components.isEmpty ? "" : components.last!
     }
-    
-    public  class func saveLocally(str:String,fileName: String) {
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                .appendingPathComponent(fileName)
-           
-
-//            try str.write(to: fileURL, atomically: true, encoding: .utf8)
-//            print("file url===",fileURL.path)
-            if FileManager.default.fileExists(atPath: fileURL.path) {
-                     if let fileHandle = try? FileHandle(forWritingTo: fileURL) {
-                        if #available(iOS 13.4, *) {
-                             try fileHandle.seekToEnd()
-                         } else {
-                             fileHandle.seekToEndOfFile()
-                             // Fallback on earlier versions
-                         }
-                         if let data = str.data(using: String.Encoding.utf8) {
-                             fileHandle.write(data)
-                         }
-                         fileHandle.closeFile()
-                     }
-                 } else {
-                     try str.write(to: fileURL, atomically: true, encoding: .utf8)
-                 }
-           
-        } catch {
-            print("JSONSave error of \(error)")
-        }
-    }
-    
+        
     public  class func getLogFileURL() -> URL {
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -229,6 +209,7 @@ public class Log {
 //            print("Log saved successfully.")
             if FileManager.default.fileExists(atPath: fileURL.path) {
                      if let fileHandle = try? FileHandle(forWritingTo: fileURL) {
+                         // to write in the same file 
                         if #available(iOS 13.4, *) {
                              try fileHandle.seekToEnd()
                          } else {

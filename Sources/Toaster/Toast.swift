@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public struct ToastView<Content: View>: View {
-    @Binding var isPresented: Bool
+    @Binding public var isPresented: Bool
   public let content: () -> Content
     
  public var body: some View {

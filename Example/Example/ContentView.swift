@@ -44,14 +44,20 @@ struct ContentView: View {
                             }
                     }
                 }
-                VStack {
-                    Spacer()
-                    
+                .overlay(
                     ToastView(isPresented: $showToast, duration: 2.0) {
                         Text("Selected: \(selectedRow ?? 0)")
                             .foregroundColor(.white)
                     }
-                }
+                      )
+//                VStack {
+//                    Spacer()
+//
+//                    ToastView(isPresented: $showToast, duration: 2.0) {
+//                        Text("Selected: \(selectedRow ?? 0)")
+//                            .foregroundColor(.white)
+//                    }
+//                }
             }
             .navigationTitle("List View")
         }

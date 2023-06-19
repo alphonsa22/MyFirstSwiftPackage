@@ -24,11 +24,13 @@ public struct NewToastView: View {
             }
             .font(.headline)
             .foregroundColor(.primary)
-            .padding(.vertical, 20)
-            .padding(.horizontal, 40)
+//            .padding(.vertical, 20)
+//            .padding(.horizontal, 40)
             .background(.gray.opacity(0.4))
+            .padding()
+            .frame(width: UIScreen.main.bounds.width)
         }
-        .frame(width: UIScreen.main.bounds.width)
+//        .frame(width: UIScreen.main.bounds.width)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

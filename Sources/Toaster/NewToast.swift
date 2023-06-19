@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct NewToastView: View {
+public struct NewToastView: View {
     
     @Binding var show: Bool
     let message: String
     
-    var body: some View {
+   public var body: some View {
         VStack {
             Spacer()
             HStack {

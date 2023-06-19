@@ -100,11 +100,11 @@
 			isa = PBXGroup;
 			children = (
 				2E4EEA4A2A3ADE4B00541B2E /* Info.plist */,
+				2E4EEA4B2A3ED28A00541B2E /* GridView.swift */,
 				2E4EEA1B2A3AC95000541B2E /* ExampleApp.swift */,
 				2E4EEA1D2A3AC95000541B2E /* ContentView.swift */,
 				2E4EEA1F2A3AC95300541B2E /* Assets.xcassets */,
 				2E4EEA212A3AC95300541B2E /* Preview Content */,
-				2E4EEA4B2A3ED28A00541B2E /* GridView.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";

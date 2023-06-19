@@ -12,6 +12,10 @@ public struct NewToastView: View {
     @Binding var show: Bool
     let message: String
     
+    public init (show: Binding<Bool>, message: String) {
+        self._show = show
+        self.message = message
+    }
    public var body: some View {
         VStack {
             Spacer()

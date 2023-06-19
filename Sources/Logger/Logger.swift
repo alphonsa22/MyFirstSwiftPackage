@@ -17,6 +17,13 @@ public enum LogEvent: String {
     case server = "🔥 "
 }
 
+public enum LogType: String {
+    case debug
+    case verbose
+    case error
+    case warning
+    case server
+}
 ///
 func print(_ object: Any) {
     // Only allowing in DEBUG mode
@@ -158,7 +165,7 @@ public class AlpLog {
         }
     }
     
-  public func log(_ message: Any, level: LogEvent, filename: String = #file, line: Int = #line, funcName: String = #function) {
+  public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
           let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
       let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(AlpLog.sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
           print(logObject)

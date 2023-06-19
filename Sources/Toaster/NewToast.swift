@@ -26,7 +26,7 @@ public struct NewToastView: View {
             .foregroundColor(.primary)
             .padding(.vertical, 20)
             .padding(.horizontal, 40)
-            .background(.gray.opacity(0.4), in: Capsule())
+            .background(.gray.opacity(0.4))
         }
         .frame(width: UIScreen.main.bounds.width)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))

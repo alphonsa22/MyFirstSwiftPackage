@@ -24,7 +24,7 @@ public struct NewToastView: View {
                     .padding()
             }
             .font(.headline)
-            .foregroundColor(.primary)
+            .foregroundColor(.white)
 //            .padding(.vertical, 20)
 //            .padding(.horizontal, 40)
             .background(.black.opacity(0.7))

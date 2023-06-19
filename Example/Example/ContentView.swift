@@ -34,7 +34,7 @@ struct ContentView: View {
                             }
                     }
                 }
-                .overLaying(overlayView: NewToastView(show: $showToast, message: "Tapped On cell with index \(selectedRow ?? 0) dbvfhd dfv gdfgv fhdb jdsbfjdsbg jdfg jdfg jfdgv fdhv fdhg jfdg jfdg jdfbg dfbg jfdbg fdbgjfdb ghjbdf jghbhj"), show: $showToast)
+                .overLaying(overlayView: NewToastView(show: $showToast, message: "Tapped On cell with index \(selectedRow ?? 0)"), show: $showToast)
 //                .overlay(
 //                    ToastView(isPresented: $showToast, duration: 2.0) {
 //                        Text("Selected: \(selectedRow ?? 0)")

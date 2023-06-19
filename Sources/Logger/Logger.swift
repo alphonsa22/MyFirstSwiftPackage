@@ -26,7 +26,7 @@ func print(_ object: Any) {
 }
 
 public class Log {
-    static var loggers = Logger()
+    static var shared = Logger()
     static var dateFormat = "yyyy-MM-dd HH:mm" //yyyy-MM-dd hh:mm:ssSSS
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()

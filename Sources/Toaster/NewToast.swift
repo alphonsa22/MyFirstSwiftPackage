@@ -28,6 +28,7 @@ public struct NewToastView: View {
 //            .padding(.vertical, 20)
 //            .padding(.horizontal, 40)
             .background(.gray)
+            .cornerRadius(6.0)
             .padding()
             .frame(width: UIScreen.main.bounds.width)
         }

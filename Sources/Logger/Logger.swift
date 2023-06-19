@@ -158,7 +158,7 @@ public class AlpLog {
         }
     }
     
-  public class func log(_ message: Any, level: LogEvent, filename: String = #file, line: Int = #line, funcName: String = #function) {
+  public class func logger(_ message: Any, level: LogEvent, filename: String = #file, line: Int = #line, funcName: String = #function) {
           let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
         let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
           print(logObject)

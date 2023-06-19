@@ -23,12 +23,13 @@ struct ContentView: View {
                                 selectedRow = index
                                 showToast = true
                                 print("selected row = \(selectedRow ?? 0)")
-                                Log.v("Tapped on listview cell \(index)")
-                                Log.i("Tapped on listview cell \(index)")
-                                Log.w("Tapped on listview cell \(index)")
-                                Log.e("Tapped on listview cell \(index)")
-                                Log.s("Tapped on listview cell \(index)")
-                                Log.d("Tapped on listview cell \(index)")
+//                                Log.v("Tapped on listview cell \(index)")
+//                                Log.i("Tapped on listview cell \(index)")
+//                                Log.w("Tapped on listview cell \(index)")
+//                                Log.e("Tapped on listview cell \(index)")
+//                                Log.s("Tapped on listview cell \(index)")
+//                                Log.d("Tapped on listview cell \(index)")
+                                Log.shared.log(level: .debug, "Tapped on listview cell \(index)")
                             }
                     }
                 }

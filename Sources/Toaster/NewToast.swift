@@ -53,7 +53,7 @@ public struct OverLay<T: View>: ViewModifier {
 
 
 extension View {
-  public func overLay<T: View>(overlayView: T, show: Binding<Bool>) -> some View {
+  public func overLaying<T: View>(overlayView: T, show: Binding<Bool>) -> some View {
         self.modifier(OverLay(show: show, overlayView: overlayView))
     }
 }

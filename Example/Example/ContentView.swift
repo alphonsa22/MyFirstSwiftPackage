@@ -9,23 +9,11 @@ import SwiftUI
 import MyFirstSwiftPackage
 
 struct ContentView: View {
+    
     @State private var showToast = false
     @State private var selectedRow: Int?
+    
     var body: some View {
-//        VStack {
-////            SwiftUIView(str:"Package Testing....")
-//            Button {
-//                Log.d("debug testing")
-//                showToast.toggle()
-//            } label: {
-//                Text("Click to log")
-//            }
-//            .padding()
-//            ToastView(isPresented: $showToast, duration: 2.0) {
-//                           Text("Toast Message")
-//                               .foregroundColor(.white)
-//                       }
-//        }
         NavigationView {
             ZStack {
                 VStack {
@@ -44,22 +32,16 @@ struct ContentView: View {
                             }
                     }
                 }
-                .overlay(
-                    ToastView(isPresented: $showToast, duration: 2.0) {
-                        Text("Selected: \(selectedRow ?? 0)")
-                            .foregroundColor(.white)
-                    }
-                      )
-//                VStack {
-//                    Spacer()
-//
+                .overLaying(overlayView: NewToastView(show: $showToast, message: "Tapped On cell with index \(selectedRow ?? 0) dbvfhd dfv gdfgv fhdb jdsbfjdsbg jdfg jdfg jfdgv fdhv fdhg jfdg jfdg jdfbg dfbg jfdbg fdbgjfdb ghjbdf jghbhj"), show: $showToast)
+//                .overlay(
 //                    ToastView(isPresented: $showToast, duration: 2.0) {
 //                        Text("Selected: \(selectedRow ?? 0)")
 //                            .foregroundColor(.white)
 //                    }
-//                }
+//                      )
             }
             .navigationTitle("List View")
+            
         }
     }
 }

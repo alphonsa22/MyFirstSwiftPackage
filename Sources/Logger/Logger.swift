@@ -8,7 +8,7 @@
 import Foundation
 import os
 
-enum LogEvent: String {
+public enum LogEvent: String {
     case error = "‼️ "
     case info = "ℹ️ "
     case debug = "📝 "
@@ -157,6 +157,14 @@ public class Log {
             self.writeLogToFile(log: "\(logObject) \n")
         }
     }
+    
+  public class func log(_ message: Any, level: LogEvent, filename: String = #file, line: Int = #line, funcName: String = #function) {
+          let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
+        let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
+          print(formattedMessage)
+//          saveLogToFile(formattedMessage)
+        self.writeLogToFile(log: "\(logObject) \n")
+      }
     
     
     /// Extract the file name from the file path

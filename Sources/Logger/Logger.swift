@@ -25,7 +25,7 @@ func print(_ object: Any) {
     #endif
 }
 
-public class Log {
+public class AlpLog {
    public static var shared = Logger()
     static var dateFormat = "yyyy-MM-dd HH:mm" //yyyy-MM-dd hh:mm:ssSSS
     static var dateFormatter: DateFormatter {

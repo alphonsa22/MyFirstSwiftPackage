@@ -21,12 +21,13 @@ public struct NewToastView: View {
             Spacer()
             HStack {
                 Text(message)
+                    .padding()
             }
             .font(.headline)
             .foregroundColor(.primary)
 //            .padding(.vertical, 20)
 //            .padding(.horizontal, 40)
-            .background(.gray.opacity(0.4))
+            .background(.gray)
             .padding()
             .frame(width: UIScreen.main.bounds.width)
         }

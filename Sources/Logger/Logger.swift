@@ -243,7 +243,7 @@ public class AlpLog {
 
 internal extension Date {
     func toString() -> String {
-        return Log.dateFormatter.string(from: self as Date)
+        return AlpLog.dateFormatter.string(from: self as Date)
     }
 }
 

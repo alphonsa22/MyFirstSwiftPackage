@@ -27,7 +27,7 @@ public struct NewToastView: View {
             .foregroundColor(.primary)
 //            .padding(.vertical, 20)
 //            .padding(.horizontal, 40)
-            .background(.gray)
+            .background(.black.opacity(0.7))
             .cornerRadius(6.0)
             .padding()
             .frame(width: UIScreen.main.bounds.width)

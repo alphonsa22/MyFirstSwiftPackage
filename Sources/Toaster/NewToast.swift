@@ -37,11 +37,11 @@ public struct NewToastView: View {
 }
 
 
-struct OverLay<T: View>: ViewModifier {
+public struct OverLay<T: View>: ViewModifier {
     @Binding var show: Bool
     let overlayView: T
     
-    func body(content: Content) -> some View {
+   public func body(content: Content) -> some View {
         ZStack {
             content
             if show {
@@ -53,7 +53,7 @@ struct OverLay<T: View>: ViewModifier {
 
 
 extension View {
-    func overLay<T: View>(overlayView: T, show: Binding<Bool>) -> some View {
+  public func overLay<T: View>(overlayView: T, show: Binding<Bool>) -> some View {
         self.modifier(OverLay(show: show, overlayView: overlayView))
     }
 }

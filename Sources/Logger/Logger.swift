@@ -72,8 +72,38 @@ public class AlpLog {
         return NSPersistentContainer(name: "LoggerModel", managedObjectModel: model)
     }()
     
-    // MARK: - Loging methods
     
+    func getEntities() {
+        let bundle = Bundle.module
+        if let modelURL = bundle.url(forResource: "LoggerModel", withExtension: "momd") {
+            // `YourDataModelFileName` is the name of your data model file without the extension (momd or xcdatamodeld)
+            print("Data model URL: \(modelURL)")
+            let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL) // Replace `yourDataModelURL` with the URL of your data model file
+
+            // Retrieve the list of entities from the managed object model
+            if let entities = managedObjectModel?.entities {
+                for entity in entities {
+                    if let entityName = entity.name {
+                        print("Entity: \(entityName)")
+                    }
+                }
+            }
+        } else {
+            print("Unable to locate data model URL.")
+        }
+        // Create a managed object model instance
+     
+    }
+    // MARK: - Loging methods
+    public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
+            let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
+        let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(AlpLog.sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
+            print(logObject)
+  //          saveLogToFile(formattedMessage)
+  //      AlpLog.writeLogToFile(log: "\(logObject) \n")
+  //      AlpLog.saveLogToDatabase(logObject)
+        getEntities()
+        }
     
     /// Logs error messages on console with prefix [‼️]
     ///
@@ -186,14 +216,7 @@ public class AlpLog {
         }
     }
     
-  public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
-          let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
-      let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(AlpLog.sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
-          print(logObject)
-//          saveLogToFile(formattedMessage)
-//      AlpLog.writeLogToFile(log: "\(logObject) \n")
-      AlpLog.saveLogToDatabase(logObject)
-      }
+ 
     
     
     /// Extract the file name from the file path
@@ -268,6 +291,8 @@ public class AlpLog {
             print("Error saving log: \(error.localizedDescription)")
         }
     }
+    
+
     
     private static func saveLogToDatabase(_ logMessage: String) {
            let context = persistentContainer.viewContext

@@ -85,6 +85,7 @@ public class AlpLog {
                 for entity in entities {
                     if let entityName = entity.name {
                         print("Entity: \(entityName)")
+                        
                     }
                 }
             }

@@ -51,6 +51,16 @@ public class AlpLog {
         return false
         #endif
     }
+    private static let persistentContainer: NSPersistentContainer = {
+           let container = NSPersistentContainer(name: "LoggerModel") // Replace with your CoreData model name
+           container.loadPersistentStores { _, error in
+               if let error = error as NSError? {
+                   fatalError("Failed to load persistent stores: \(error), \(error.userInfo)")
+               }
+           }
+           return container
+       }()
+       
     
     // MARK: - Loging methods
     
@@ -250,19 +260,18 @@ public class AlpLog {
     }
     
     private static func saveLogToDatabase(_ logMessage: String) {
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        print("context===",context)
-//        let logEntity = LoggerEntity(context: context)
-//        logEntity.timestamp = Date()
-//        logEntity.logMessage = logMessage
-//
-//        do {
-//            try context.save()
-//            print("successfully updated")
-//        } catch {
-//            print("Error saving log to database: \(error)")
-//        }
-    }
+           let context = persistentContainer.viewContext
+           
+//           let logEntity = LogEntity(context: context)
+//           logEntity.timestamp = Date()
+//           logEntity.message = logMessage
+           
+           do {
+               try context.save()
+           } catch {
+               print("Error saving log to database: \(error)")
+           }
+       }
 }
 
 internal extension Date {

@@ -119,7 +119,6 @@ public class AlpLog {
             do {
               
                 try? context!.save()
-                try? context!.parent?.save()
                     print("successfully saved")
               
                 let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)

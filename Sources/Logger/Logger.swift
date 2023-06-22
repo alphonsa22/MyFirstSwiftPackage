@@ -120,9 +120,17 @@ public class AlpLog {
               
                 try? context!.save()
                     print("successfully saved")
+                
+                
               
                 let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
                 print(records?.count)
+                
+                guard records != nil && records?.count != 0 else { return }
+                
+                records!.forEach { item in
+                    print("item==",item.message)
+                }
  
             } catch {
                 print("Error saving log to database: \(error)")

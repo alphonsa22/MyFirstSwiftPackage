@@ -94,6 +94,28 @@ public class AlpLog {
         // Create a managed object model instance
      
     }
+    
+    private static func saveLogToDatabase(_ logMessage: String) {
+           let context = persistentContainer.viewContext
+        
+            print("context===",context)
+           
+           let logEntity = LoggerEntity(context: context)
+           logEntity.timestamp = Date()
+           logEntity.message = logMessage
+           
+           do {
+               if context.hasChanges {
+                   try? context.save()
+                   try? context.parent?.save()
+                   print("successfully saved")
+               }
+               
+              
+           } catch {
+               print("Error saving log to database: \(error)")
+           }
+       }
     // MARK: - Loging methods
     public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
             let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
@@ -101,8 +123,8 @@ public class AlpLog {
             print(logObject)
   //          saveLogToFile(formattedMessage)
   //      AlpLog.writeLogToFile(log: "\(logObject) \n")
-  //      AlpLog.saveLogToDatabase(logObject)
-        getEntities()
+        AlpLog.saveLogToDatabase(logObject)
+//        getEntities()
         }
     
     /// Logs error messages on console with prefix [‼️]
@@ -294,22 +316,7 @@ public class AlpLog {
     
 
     
-    private static func saveLogToDatabase(_ logMessage: String) {
-           let context = persistentContainer.viewContext
-        
-            print("context===",context)
-           
-           let logEntity = LoggerEntity(context: context)
-//           logEntity.timestamp = Date()
-//           logEntity.message = logMessage
-           
-           do {
-               try context.save()
-               print("successfully saved")
-           } catch {
-               print("Error saving log to database: \(error)")
-           }
-       }
+
 }
 
 internal extension Date {

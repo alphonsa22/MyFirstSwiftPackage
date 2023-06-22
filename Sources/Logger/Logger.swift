@@ -63,7 +63,7 @@ public class AlpLog {
        
     private static let persistentContainer: NSPersistentContainer = {
         let bundle = Bundle.module
-        guard let modelURL = bundle.url(forResource: "LoggerModell", withExtension: "momd") else {
+        guard let modelURL = bundle.url(forResource: "LoggerModel", withExtension: "momd") else {
             fatalError("Failed to locate Core Data model")
         }
         guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
@@ -272,18 +272,18 @@ public class AlpLog {
     private static func saveLogToDatabase(_ logMessage: String) {
            let context = persistentContainer.viewContext
         
-        print("context===",context)
+            print("context===",context)
            
-//           let logEntity = LoggerEntity(context: context)
+           let logEntity = LoggerEntity(context: context)
 //           logEntity.timestamp = Date()
 //           logEntity.message = logMessage
-//           
-//           do {
-//               try context.save()
-//               print("successfully saved")
-//           } catch {
-//               print("Error saving log to database: \(error)")
-//           }
+           
+           do {
+               try context.save()
+               print("successfully saved")
+           } catch {
+               print("Error saving log to database: \(error)")
+           }
        }
 }
 

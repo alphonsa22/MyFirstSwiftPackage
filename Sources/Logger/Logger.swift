@@ -100,9 +100,9 @@ public class AlpLog {
         
             print("context===",context)
            
-           let logEntity = LoggerEntity(context: context)
-           logEntity.timestamp = Date()
-           logEntity.message = logMessage
+           let logEntity = TestEntiry(context: context)
+//           logEntity.timestamp = Date()
+//           logEntity.message = logMessage
            
            do {
                if context.hasChanges {

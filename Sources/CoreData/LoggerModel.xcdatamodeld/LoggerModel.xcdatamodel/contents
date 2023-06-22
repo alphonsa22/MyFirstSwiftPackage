@@ -4,4 +4,7 @@
         <attribute name="message" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="TestEntiry" representedClassName=".TestEntiry" syncable="YES">
+        <attribute name="test" optional="YES" attributeType="String"/>
+    </entity>
 </model>

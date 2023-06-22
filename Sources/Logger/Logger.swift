@@ -9,6 +9,9 @@ import Foundation
 import os
 import CoreData
 
+open class PersistentContainer: NSPersistentContainer {
+}
+
 public enum LogEvent: String {
     case error = "‼️ "
     case info = "ℹ️ "
@@ -61,16 +64,28 @@ public class AlpLog {
 //           return container
 //       }()
        
-    private static let persistentContainer: NSPersistentContainer = {
-        let bundle = Bundle.module
-        guard let modelURL = bundle.url(forResource: "LoggerModel", withExtension: "momd") else {
-            fatalError("Failed to locate Core Data model")
-        }
-        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Failed to load Core Data model")
-        }
-        return NSPersistentContainer(name: "LoggerModel", managedObjectModel: model)
-    }()
+//    private static let persistentContainer: NSPersistentContainer = {
+//        let bundle = Bundle.module
+//        guard let modelURL = bundle.url(forResource: "LoggerModel", withExtension: "momd") else {
+//            fatalError("Failed to locate Core Data model")
+//        }
+//        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
+//            fatalError("Failed to load Core Data model")
+//        }
+//        return NSPersistentContainer(name: "LoggerModel", managedObjectModel: model)
+//    }()
+    
+     public var persistentContainer: PersistentContainer? = {
+            guard let modelURL = Bundle.module.url(forResource:"CoreDataSPM", withExtension: "momd") else { return  nil }
+            guard let model = NSManagedObjectModel(contentsOf: modelURL) else { return nil }
+            let container = PersistentContainer(name:"CoreDataSPM",managedObjectModel:model)
+            container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+                if let error = error as NSError? {
+                    print("Unresolved error \(error), \(error.userInfo)")
+                }
+            })
+            return container
+        }()
     
     
     func getEntities() {
@@ -98,27 +113,27 @@ public class AlpLog {
     }
     
     private static func saveLogToDatabase(_ logMessage: String) {
-           let context = persistentContainer.viewContext
+        let context = AlpLog.shared.persistentContainer?.viewContext
         
-            print("context===",context)
+            print("context===",context!)
            
            
            
-        if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context) as? LoggerEntity {
+        if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context!) as? LoggerEntity {
 //            logEntity.timestamp = Date()
 //            logEntity.message = logMessage
             
             print("success")
             
-            let logEntity = LoggerEntity(context: context)
+            let logEntity = LoggerEntity(context: context!)
             logEntity.timestamp = Date()
             logEntity.message = logMessage
             
             
             do {
               
-                    try? context.save()
-                    try? context.parent?.save()
+                try? context!.save()
+                try? context!.parent?.save()
                     print("successfully saved")
               
  

@@ -112,11 +112,11 @@ public class AlpLog {
             
             print("success")
             do {
-                if context.hasChanges {
+              
                     try? context.save()
                     try? context.parent?.save()
                     print("successfully saved")
-                }
+              
  
  
             } catch {

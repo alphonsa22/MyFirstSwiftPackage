@@ -25,7 +25,7 @@ let package = Package(
         .target(
             name: "MyFirstSwiftPackage",
             dependencies: ["Alamofire"],
-            path: "Sources",
+            path: "Sources/CoreData",
             resources: [.process("CoreData/LoggerModel.xcdatamodeld")]),
         .testTarget(
             name: "MyFirstSwiftPackageTests",

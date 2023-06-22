@@ -7,6 +7,7 @@
 
 import Foundation
 import os
+import CoreData
 
 public enum LogEvent: String {
     case error = "‼️ "
@@ -155,7 +156,7 @@ public class AlpLog {
     ///   - line: Line number in file from where the logging is done
     ///   - column: Column number of the log message
     ///   - funcName: Name of the function from where the logging is done
-    public class func s( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
+    public static func s( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
             print("\(Date().toString()) \(LogEvent.server.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)")
             let logObject = "\(Date().toString()) \(LogEvent.server.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(funcName) : \(object)"
@@ -245,6 +246,21 @@ public class AlpLog {
         } catch {
             print("Error saving log: \(error.localizedDescription)")
         }
+    }
+    
+    private static func saveLogToDatabase(_ logMessage: String) {
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        print("context===",context)
+//        let logEntity = LoggerEntity(context: context)
+//        logEntity.timestamp = Date()
+//        logEntity.logMessage = logMessage
+//
+//        do {
+//            try context.save()
+//            print("successfully updated")
+//        } catch {
+//            print("Error saving log to database: \(error)")
+//        }
     }
 }
 

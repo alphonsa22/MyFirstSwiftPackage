@@ -76,9 +76,9 @@ public class AlpLog {
 //    }()
     
      public var persistentContainer: PersistentContainer? = {
-            guard let modelURL = Bundle.module.url(forResource:"CoreDataSPM", withExtension: "momd") else { return  nil }
+            guard let modelURL = Bundle.module.url(forResource:"LoggerModel", withExtension: "momd") else { return  nil }
             guard let model = NSManagedObjectModel(contentsOf: modelURL) else { return nil }
-            let container = PersistentContainer(name:"CoreDataSPM",managedObjectModel:model)
+            let container = PersistentContainer(name:"LoggerModel",managedObjectModel:model)
             container.loadPersistentStores(completionHandler: { (storeDescription, error) in
                 if let error = error as NSError? {
                     print("Unresolved error \(error), \(error.userInfo)")

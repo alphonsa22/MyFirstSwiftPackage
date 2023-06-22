@@ -35,7 +35,7 @@ func print(_ object: Any) {
 
 public class AlpLog {
    public static var shared = AlpLog()
-    static var dateFormat = "yyyy-MM-dd HH:mm" //yyyy-MM-dd hh:mm:ssSSS
+    static var dateFormat = "yyyy-MM-dd HH:mm" //yyyy-MM-dd hh:mm:ss
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat

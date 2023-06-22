@@ -85,6 +85,7 @@ public class AlpLog {
                 for entity in entities {
                     if let entityName = entity.name {
                         print("Entity: \(entityName)")
+                        print("enity descriptio: \(entity.description)")
                         
                     }
                 }
@@ -101,21 +102,27 @@ public class AlpLog {
         
             print("context===",context)
            
-           let logEntity = TestEntiry(context: context)
+//           let logEntity = TestEntiry(context: context)
 //           logEntity.timestamp = Date()
 //           logEntity.message = logMessage
            
-           do {
-               if context.hasChanges {
-                   try? context.save()
-                   try? context.parent?.save()
-                   print("successfully saved")
-               }
-               
-              
-           } catch {
-               print("Error saving log to database: \(error)")
-           }
+        if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context) as? LoggerEntity {
+            logEntity.timestamp = Date()
+            logEntity.message = logMessage
+            
+            print("success")
+        }
+//           do {
+//               if context.hasChanges {
+//                   try? context.save()
+//                   try? context.parent?.save()
+//                   print("successfully saved")
+//               }
+//
+//
+//           } catch {
+//               print("Error saving log to database: \(error)")
+//           }
        }
     // MARK: - Loging methods
     public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {

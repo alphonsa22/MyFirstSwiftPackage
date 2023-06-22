@@ -51,16 +51,26 @@ public class AlpLog {
         return false
         #endif
     }
-    private static let persistentContainer: NSPersistentContainer = {
-           let container = NSPersistentContainer(name: "LoggerModel") // Replace with your CoreData model name
-           container.loadPersistentStores { _, error in
-               if let error = error as NSError? {
-                   fatalError("Failed to load persistent stores: \(error), \(error.userInfo)")
-               }
-           }
-           return container
-       }()
+//    private static let persistentContainer: NSPersistentContainer = {
+//           let container = NSPersistentContainer(name: "LoggerModel") // Replace with your CoreData model name
+//           container.loadPersistentStores { _, error in
+//               if let error = error as NSError? {
+//                   fatalError("Failed to load persistent stores: \(error), \(error.userInfo)")
+//               }
+//           }
+//           return container
+//       }()
        
+    private static let persistentContainer: NSPersistentContainer = {
+        let bundle = Bundle.module
+        guard let modelURL = bundle.url(forResource: "LoggerModel", withExtension: "momd") else {
+            fatalError("Failed to locate Core Data model")
+        }
+        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
+            fatalError("Failed to load Core Data model")
+        }
+        return NSPersistentContainer(name: "LoggerModel", managedObjectModel: model)
+    }()
     
     // MARK: - Loging methods
     

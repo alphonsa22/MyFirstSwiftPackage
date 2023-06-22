@@ -1,12 +1,21 @@
 {
   "pins" : [
     {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "bc268c28fb170f494de9e9927c371b8342979ece",
+        "version" : "5.7.1"
+      }
+    },
+    {
       "identity" : "myfirstswiftpackage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/alphonsa22/MyFirstSwiftPackage",
       "state" : {
         "branch" : "main",
-        "revision" : "07051200ddf94b3caef332d06d53a8e73587f36a"
+        "revision" : "5e332439f63f5a70a18a463025d7805898eaf0aa"
       }
     }
   ],

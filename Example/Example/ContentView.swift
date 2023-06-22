@@ -31,7 +31,8 @@ struct ContentView: View {
 //                                Log.d("Tapped on listview cell \(index)")
 //                                AlpLog.shared.log(level: .debug, "Tapped on listview cell \(index)")
 //                                AlpLog.shared.log(level: .error, "Tapped on listview cell \(index)")
-                                AlpLog.shared.log(level: .debug, "Tapped on listview cell \(index)")
+//                                AlpLog.shared.log(level: .debug, "Tapped on listview cell \(index)")
+                                
                             }
                     }
                 }

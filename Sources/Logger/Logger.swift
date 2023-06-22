@@ -171,7 +171,7 @@ public class AlpLog {
       let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(AlpLog.sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
           print(logObject)
 //          saveLogToFile(formattedMessage)
-      AlpLog.writeLogToFile(log: "\(logObject) \n")
+//      AlpLog.writeLogToFile(log: "\(logObject) \n")
       saveLogToDatabase(logObject)
       }
     

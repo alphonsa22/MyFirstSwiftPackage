@@ -172,7 +172,7 @@ public class AlpLog {
           print(logObject)
 //          saveLogToFile(formattedMessage)
 //      AlpLog.writeLogToFile(log: "\(logObject) \n")
-      saveLogToDatabase(logObject)
+      AlpLog.saveLogToDatabase(logObject)
       }
     
     

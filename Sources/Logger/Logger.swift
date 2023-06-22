@@ -102,15 +102,19 @@ public class AlpLog {
         
             print("context===",context)
            
-//           let logEntity = TestEntiry(context: context)
-//           logEntity.timestamp = Date()
-//           logEntity.message = logMessage
+           
            
         if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context) as? LoggerEntity {
+//            logEntity.timestamp = Date()
+//            logEntity.message = logMessage
+            
+            print("success")
+            
+            let logEntity = LoggerEntity(context: context)
             logEntity.timestamp = Date()
             logEntity.message = logMessage
             
-            print("success")
+            
             do {
               
                     try? context.save()

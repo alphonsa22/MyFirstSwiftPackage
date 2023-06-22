@@ -9,9 +9,6 @@ import Foundation
 import os
 import CoreData
 
-open class PersistentContainer: NSPersistentContainer {
-}
-
 public enum LogEvent: String {
     case error = "‼️ "
     case info = "ℹ️ "
@@ -75,18 +72,7 @@ public class AlpLog {
 //        return NSPersistentContainer(name: "LoggerModel", managedObjectModel: model)
 //    }()
     
-     public var persistentContainer: PersistentContainer? = {
-            guard let modelURL = Bundle.module.url(forResource:"LoggerModel", withExtension: "momd") else { return  nil }
-            guard let model = NSManagedObjectModel(contentsOf: modelURL) else { return nil }
-            let container = PersistentContainer(name:"LoggerModel",managedObjectModel:model)
-            container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-                if let error = error as NSError? {
-                    print("Unresolved error \(error), \(error.userInfo)")
-                }
-            })
-            return container
-        }()
-    
+  
     
     func getEntities() {
         let bundle = Bundle.module
@@ -113,7 +99,7 @@ public class AlpLog {
     }
     
     private static func saveLogToDatabase(_ logMessage: String) {
-        let context = AlpLog.shared.persistentContainer?.viewContext
+        let context = CoreDataManager.shared.persistentContainer?.viewContext
         
             print("context===",context!)
            
@@ -136,7 +122,8 @@ public class AlpLog {
                 try? context!.parent?.save()
                     print("successfully saved")
               
- 
+                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
+                print(records?.count)
  
             } catch {
                 print("Error saving log to database: \(error)")

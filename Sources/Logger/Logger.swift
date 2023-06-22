@@ -274,15 +274,16 @@ public class AlpLog {
         
         print("context===",context)
            
-//           let logEntity = LogEntity(context: context)
-//           logEntity.timestamp = Date()
-//           logEntity.message = logMessage
+           let logEntity = LoggerEntity(context: context)
+           logEntity.timestamp = Date()
+           logEntity.message = logMessage
            
-//           do {
-//               try context.save()
-//           } catch {
-//               print("Error saving log to database: \(error)")
-//           }
+           do {
+               try context.save()
+               print("successfully saved")
+           } catch {
+               print("Error saving log to database: \(error)")
+           }
        }
 }
 

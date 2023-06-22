@@ -111,18 +111,19 @@ public class AlpLog {
             logEntity.message = logMessage
             
             print("success")
+            do {
+                if context.hasChanges {
+                    try? context.save()
+                    try? context.parent?.save()
+                    print("successfully saved")
+                }
+ 
+ 
+            } catch {
+                print("Error saving log to database: \(error)")
+            }
         }
-//           do {
-//               if context.hasChanges {
-//                   try? context.save()
-//                   try? context.parent?.save()
-//                   print("successfully saved")
-//               }
 //
-//
-//           } catch {
-//               print("Error saving log to database: \(error)")
-//           }
        }
     // MARK: - Loging methods
     public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {

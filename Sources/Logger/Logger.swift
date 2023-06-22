@@ -166,12 +166,13 @@ public class AlpLog {
         }
     }
     
-  public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
+  public static func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
           let formattedMessage = "[\(level.rawValue.uppercased())] \(Date()): \(message)"
       let logObject = "\(Date().toString()) [\(level.rawValue.uppercased())][\(AlpLog.sourceFileName(filePath: filename))]:\(line) \(funcName) : \(message)"
           print(logObject)
 //          saveLogToFile(formattedMessage)
       AlpLog.writeLogToFile(log: "\(logObject) \n")
+      saveLogToDatabase(logObject)
       }
     
     

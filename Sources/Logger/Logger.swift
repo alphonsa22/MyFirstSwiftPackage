@@ -271,16 +271,18 @@ public class AlpLog {
     
     private static func saveLogToDatabase(_ logMessage: String) {
            let context = persistentContainer.viewContext
+        
+        print("context===",context)
            
 //           let logEntity = LogEntity(context: context)
 //           logEntity.timestamp = Date()
 //           logEntity.message = logMessage
            
-           do {
-               try context.save()
-           } catch {
-               print("Error saving log to database: \(error)")
-           }
+//           do {
+//               try context.save()
+//           } catch {
+//               print("Error saving log to database: \(error)")
+//           }
        }
 }
 

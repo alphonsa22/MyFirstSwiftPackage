@@ -125,14 +125,14 @@ public class AlpLog {
 //
 //            }
             
-            let logEntity = LoggerEntity(context: newContext)
+            let logEntity = LoggerEntity(context: context!)
             logEntity.timestamp = Date()
             logEntity.message = logMessage
             
             do {
-                if(newContext.hasChanges) {
-                    try? newContext.save()
-                    try newContext.parent?.save()
+                if(context!.hasChanges) {
+                    try? context!.save()
+                    try context!.parent?.save()
 //                    completion(true, cdCategoryArry)
                     print("success")
                 }
@@ -151,9 +151,19 @@ public class AlpLog {
 ////                    print("successfully saved")
 ////
 ////
-////
-                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
-                print(records?.count)
+//////
+//                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
+//                print(records?.count)
+        
+        let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
+        guard records != nil && records?.count != 0 else {
+            print("no category record found.")
+//            completion(false, [])
+            return
+        }
+        
+        
+        print(records?.count)
 ////
 ////                guard records != nil && records?.count != 0 else { return }
 ////

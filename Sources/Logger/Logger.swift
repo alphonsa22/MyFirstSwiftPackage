@@ -101,7 +101,7 @@ public class AlpLog {
     private static func saveLogToDatabase(_ logMessage: String) {
         let context = CoreDataManager.shared.persistentContainer?.viewContext
         
-            print("context===",context!)
+//            print("context===",context!)
            
            
            
@@ -109,33 +109,62 @@ public class AlpLog {
 //            logEntity.timestamp = Date()
 //            logEntity.message = logMessage
             
-            print("success")
+          
+        
+        
+        CoreDataManager.shared.persistentContainer?.performBackgroundTask { newContext in
             
-            let logEntity = LoggerEntity(context: context!)
+//            var categoryList = CDCategoryList(context: context)
+//            categoryList.categories = []
+//            cdCategoryArry.forEach { item in
+//                let perCategory = CDCategory(context: context)
+//                perCategory.name = item.name
+//                perCategory.isSelected = item.name == "All" ? true : false
+//                perCategory.catColor = item.catColor
+//                perCategory.cdCateList = categoryList
+//
+//            }
+            
+            let logEntity = LoggerEntity(context: newContext)
             logEntity.timestamp = Date()
             logEntity.message = logMessage
             
-        CoreDataManager.shared.saveContext()
-//            do {
-//              
-//                try? context!.save()
-//                    print("successfully saved")
-//                
-//                
-//              
+            do {
+                if(newContext.hasChanges) {
+                    try? newContext.save()
+                    try newContext.parent?.save()
+//                    completion(true, cdCategoryArry)
+                    print("success")
+                }
+            } catch let error {
+                print("Failed To Save:",error)
+//                completion(false, [])
+            }
+            
+        }
+    
+            
+//        CoreDataManager.shared.saveContext()
+////            do {
+////
+////                try? context!.save()
+////                    print("successfully saved")
+////
+////
+////
                 let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
                 print(records?.count)
-//                
-//                guard records != nil && records?.count != 0 else { return }
-//                
-//                records!.forEach { item in
-//                    print("item==",item.message)
-//                }
-// 
-//            } catch {
-//                print("Error saving log to database: \(error)")
-//            }
-//        }
+////
+////                guard records != nil && records?.count != 0 else { return }
+////
+////                records!.forEach { item in
+////                    print("item==",item.message)
+////                }
+////
+////            } catch {
+////                print("Error saving log to database: \(error)")
+////            }
+////        }
 //
        }
     // MARK: - Loging methods

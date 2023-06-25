@@ -105,7 +105,7 @@ public class AlpLog {
            
            
            
-        if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context!) as? LoggerEntity {
+//        if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context!) as? LoggerEntity {
 //            logEntity.timestamp = Date()
 //            logEntity.message = logMessage
             
@@ -135,7 +135,7 @@ public class AlpLog {
             } catch {
                 print("Error saving log to database: \(error)")
             }
-        }
+//        }
 //
        }
     // MARK: - Loging methods

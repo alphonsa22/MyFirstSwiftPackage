@@ -111,9 +111,9 @@ public class AlpLog {
             
             print("success")
 //
-//            let logEntity = LoggerEntity(context: context!)
-//            logEntity.timestamp = Date()
-//            logEntity.message = logMessage
+            let logEntity = LoggerEntity(context: context!)
+            logEntity.timestamp = Date()
+            logEntity.message = logMessage
             
             
             do {

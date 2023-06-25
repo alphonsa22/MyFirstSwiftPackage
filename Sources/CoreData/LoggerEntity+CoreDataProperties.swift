@@ -18,5 +18,5 @@ extension LoggerEntity {
 
     @NSManaged public var timestamp: Date?
     @NSManaged public var message: String?
-
+    @NSManaged public var loggerlist: LoggerEntityList?
 }

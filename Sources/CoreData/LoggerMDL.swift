@@ -13,3 +13,8 @@ struct LoggerMDL: Codable {
     let message: String?
     
 }
+
+struct LoggerListMDL: Codable {
+    
+    let loggers: [LoggerMDL]?
+}

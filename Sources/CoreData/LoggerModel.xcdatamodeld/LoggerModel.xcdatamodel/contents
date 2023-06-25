@@ -3,6 +3,10 @@
     <entity name="LoggerEntity" representedClassName="MyFirstSwiftPackage.LoggerEntity" syncable="YES">
         <attribute name="message" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="loggerlist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LoggerEntityList" inverseName="loggers" inverseEntity="LoggerEntityList"/>
+    </entity>
+    <entity name="LoggerEntityList" representedClassName="MyFirstSwiftPackage.LoggerEntityList" syncable="YES">
+        <relationship name="loggers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LoggerEntity" inverseName="loggerlist" inverseEntity="LoggerEntity"/>
     </entity>
     <entity name="TestEntiry" representedClassName=".TestEntiry" syncable="YES">
         <attribute name="test" optional="YES" attributeType="String"/>

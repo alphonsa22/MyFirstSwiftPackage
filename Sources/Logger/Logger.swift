@@ -98,45 +98,75 @@ public class AlpLog {
      
     }
     
-    private static func saveLogToDatabase(_ logMessage: String) {
+    private static func saveLogToDatabase(_ loggerArry: [LoggerMDL]) {
         let context = CoreDataManager.shared.persistentContainer?.viewContext
         
             print("context===",context!)
-           
-           
-           
-//        if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context!) as? LoggerEntity {
-//            logEntity.timestamp = Date()
-//            logEntity.message = logMessage
+        
+        
+        CoreDataManager.shared.persistentContainer?.performBackgroundTask { newContext in
             
-            print("success")
-//
-            let logEntity = LoggerEntity(context: context!)
-            logEntity.timestamp = Date()
-            logEntity.message = logMessage
-            
+            let loggerEntityList = LoggerEntityList(context: context!)
+            loggerEntityList.loggers = []
+            loggerArry.forEach { item in
+                let perLogger = LoggerEntity(context: context!)
+                perLogger.message = item.message
+                perLogger.timestamp = item.timestamp
+                perLogger.loggerlist = loggerEntityList
+            }
             
             do {
-              
-                try? context!.save()
-                    print("successfully saved")
-                
-                
-              
-                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
-                print(records?.count)
-                
-                guard records != nil && records?.count != 0 else { return }
-                
-                records!.forEach { item in
-                    print("item==",item.message)
+                if(context!.hasChanges) {
+                    try? context!.save()
+                    try context!.parent?.save()
+                    
+                    let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
+                    print(records?.count)
+
+                    guard records != nil && records?.count != 0 else { return }
+
+                    records!.forEach { item in
+                        print("item==",item.message)
+                    }
                 }
- 
-            } catch {
-                print("Error saving log to database: \(error)")
+            } catch let error {
+                print("Failed To Save:",error)
             }
-//        }
+            
+        }
+        
+        
+        
+        
+
+            
+//            print("success")
 //
+//            let logEntity = LoggerEntity(context: context!)
+//            logEntity.timestamp = Date()
+//            logEntity.message = logMessage
+//
+//
+//            do {
+//
+//                try? context!.save()
+//                    print("successfully saved")
+//
+//
+//
+//                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
+//                print(records?.count)
+//
+//                guard records != nil && records?.count != 0 else { return }
+//
+//                records!.forEach { item in
+//                    print("item==",item.message)
+//                }
+//
+//            } catch {
+//                print("Error saving log to database: \(error)")
+//            }
+
        }
     // MARK: - Loging methods
     public func log(level: LogType, _ message: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
@@ -145,8 +175,9 @@ public class AlpLog {
 //            print(logObject)
   //          saveLogToFile(formattedMessage)
   //      AlpLog.writeLogToFile(log: "\(logObject) \n")
-        CoreDataManager.shared.clearDatabase()
-        AlpLog.saveLogToDatabase(logObject)
+//        CoreDataManager.shared.clearDatabase()
+        
+        AlpLog.saveLogToDatabase([LoggerMDL(timestamp: Date(), message: logObject)])
 //        getEntities()
         }
     

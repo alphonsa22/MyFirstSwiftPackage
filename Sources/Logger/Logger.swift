@@ -123,8 +123,8 @@ public class AlpLog {
 //                
 //                
 //              
-//                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
-//                print(records?.count)
+                let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
+                print(records?.count)
 //                
 //                guard records != nil && records?.count != 0 else { return }
 //                

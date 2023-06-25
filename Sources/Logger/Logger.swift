@@ -106,8 +106,8 @@ public class AlpLog {
            
            
         if let logEntity = NSEntityDescription.insertNewObject(forEntityName: "LoggerEntity", into: context!) as? LoggerEntity {
-            logEntity.timestamp = Date()
-            logEntity.message = logMessage
+//            logEntity.timestamp = Date()
+//            logEntity.message = logMessage
             
             print("success")
 //

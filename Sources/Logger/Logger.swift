@@ -129,17 +129,19 @@ public class AlpLog {
             logEntity.timestamp = Date()
             logEntity.message = logMessage
             
-            do {
-                if(context!.hasChanges) {
-                    try? context!.save()
-                    try context!.parent?.save()
-//                    completion(true, cdCategoryArry)
-                    print("success")
-                }
-            } catch let error {
-                print("Failed To Save:",error)
-//                completion(false, [])
-            }
+            CoreDataManager.shared.saveContext()
+            
+//            do {
+//                if(context!.hasChanges) {
+//                    try? context!.save()
+//                    try context!.parent?.save()
+////                    completion(true, cdCategoryArry)
+//                    print("success")
+//                }
+//            } catch let error {
+//                print("Failed To Save:",error)
+////                completion(false, [])
+//            }
             
         }
     

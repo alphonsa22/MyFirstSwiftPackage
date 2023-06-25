@@ -117,11 +117,11 @@ public class AlpLog {
 
         var loggerMdlArry = [LoggerMDL]()
         records!.forEach { item in
-            print("item==",item.loggers ?? [])
+//            print("item==",item.loggers ?? [])
             let loggerItem = item.convertToLoggerList()
             loggerMdlArry = loggerItem.loggers ?? []
         }
-        
+        print("loggerMdlArry===",loggerMdlArry)
         return loggerMdlArry
     }
     

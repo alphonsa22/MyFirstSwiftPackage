@@ -114,13 +114,17 @@ public class AlpLog {
         print(records?.count)
 
         guard records != nil && records?.count != 0 else { return [] }
-
+        
         var loggerMdlArry = [LoggerMDL]()
         records!.forEach { item in
 //            print("item==",item.loggers ?? [])
             let loggerItem = item.convertToLoggerList()
-            loggerMdlArry = loggerItem.loggers ?? []
+//            loggerMdlArry.append()
+            for item in loggerItem.loggers ?? [] {
+                loggerMdlArry.append(item)
+            }
         }
+        print("loggerMdlArry.count===",loggerMdlArry.count)
         print("loggerMdlArry===",loggerMdlArry)
         return loggerMdlArry
     }

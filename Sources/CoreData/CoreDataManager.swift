@@ -33,17 +33,32 @@ struct CoreDataManager {
 //    lazy var context = persistentContainer.viewContext
     // MARK: - Core Data Saving support
 
-    mutating func saveContext() {
-        let context = persistentContainer?.viewContext
-        if ((context?.hasChanges) != nil) {
-            do {
-                try context?.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
+    mutating func saveContext(_ completion: @escaping(_ status: Bool) -> Void) {
+           let context = persistentContainer?.viewContext
+           let moc = NSManagedObjectContext(concurrencyType:.mainQueueConcurrencyType)
+           let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+           privateMOC.parent = moc
+           privateMOC.perform({
+               do {
+                   try privateMOC.save()
+                   completion(true)
+               } catch {
+                   completion(false)
+                   fatalError("Failure to save context: \(error)")
+               }
+           })
+   //        if ((context?.hasChanges) != nil) {
+   //            do {
+   //                try context?.save()
+   //                completion(true)
+   //            } catch {
+   //                completion(false)
+   //                let nserror = error as NSError
+   //                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+   //
+   //            }
+   //        }
+       }
     
     mutating func fetchManagedObject<T: NSManagedObject>(managedObject: T.Type) -> [T]?
     {
@@ -64,7 +79,9 @@ struct CoreDataManager {
     {
         let context = persistentContainer?.viewContext
         context?.delete(managedObject)
-            saveContext()
+        saveContext { status in
+            
+        }
 
     }
     

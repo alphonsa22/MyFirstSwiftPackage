@@ -93,18 +93,26 @@ public class AlpLog {
                 perLogger.loggerlist = loggerEntityList
             }
             
-            DispatchQueue.main.async {
-                do {
-                    if(context!.hasChanges) {
-                        try? context!.save()
-                        try context!.parent?.save()
-                        
-    //                    self.fetchLoggerList()
-                    }
-                } catch let error {
-                    print("Failed To Save:",error)
+            CoreDataManager.shared.saveContext { status in
+                if status {
+                    print("Successfully saved log message")
+                } else {
+                    print("error saving the log")
                 }
             }
+            
+//            DispatchQueue.main.async {
+//                do {
+//                    if(context!.hasChanges) {
+//                        try? context!.save()
+//                        try context!.parent?.save()
+//
+//    //                    self.fetchLoggerList()
+//                    }
+//                } catch let error {
+//                    print("Failed To Save:",error)
+//                }
+//            }
             
             
      

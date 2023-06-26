@@ -93,16 +93,21 @@ public class AlpLog {
                 perLogger.loggerlist = loggerEntityList
             }
             
-            do {
-                if(context!.hasChanges) {
-                    try? context!.save()
-                    try context!.parent?.save()
-                    
-                    self.fetchLoggerList()
+            DispatchQueue.main.async {
+                do {
+                    if(context!.hasChanges) {
+                        try? context!.save()
+                        try context!.parent?.save()
+                        
+    //                    self.fetchLoggerList()
+                    }
+                } catch let error {
+                    print("Failed To Save:",error)
                 }
-            } catch let error {
-                print("Failed To Save:",error)
             }
+            
+            
+     
             
         }
     }

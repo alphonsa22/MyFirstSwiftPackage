@@ -96,6 +96,7 @@ public class AlpLog {
             CoreDataManager.shared.saveContext { status in
                 if status {
                     print("Successfully saved log message")
+                    self.fetchLoggerList()
                 } else {
                     print("error saving the log")
                 }

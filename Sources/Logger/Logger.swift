@@ -97,8 +97,8 @@ public class AlpLog {
                 if(context!.hasChanges) {
                     try? context!.save()
                     try context!.parent?.save()
-                    self.fetchLoggerList()
-//                    self.fetchBasedOnSpecificDate()
+//                    self.fetchLoggerList()
+                    self.fetchBasedOnSpecificDate()
                 }
             } catch let error {
                 print("Failed To Save:",error)
@@ -149,7 +149,7 @@ public class AlpLog {
             fatalError("Failed to convert target date string to Date object.")
         }
         
-        let fetchRequest: NSFetchRequest<LoggerEntityList> = LoggerEntityList.fetchRequest()
+        let fetchRequest: NSFetchRequest<LoggerEntity> = LoggerEntity.fetchRequest()
         let calendar = Calendar.current
         let startDate = calendar.startOfDay(for: targetDate)
         let endDate = calendar.date(byAdding: .day, value: 1, to: startDate)
@@ -161,12 +161,12 @@ public class AlpLog {
             print("logEntries===",logEntries)
             // Process the fetched log entries
             for logEntry in logEntries ?? [] {
-//                let timestamp = logEntry.timestamp // Access the timestamp attribute
-//                let message = logEntry.message // Access the message attribute
-//
-//                print("Timestamp: \(timestamp ?? ""), Message: \(message ?? "")")
+                let timestamp = logEntry.timestamp // Access the timestamp attribute
+                let message = logEntry.message // Access the message attribute
+
+                print("Timestamp: \(timestamp ?? Date()), Message: \(message ?? "")")
                 
-                print(logEntry.loggers?.count)
+               
             }
         } catch {
             fatalError("Failed to fetch log entries: \(error)")

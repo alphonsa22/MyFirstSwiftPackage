@@ -120,6 +120,7 @@ public class AlpLog {
                 if(context!.hasChanges) {
                     try? context!.save()
                     try context!.parent?.save()
+                    self.fetchLoggerList()
                 }
             } catch let error {
                 print("Failed To Save:",error)

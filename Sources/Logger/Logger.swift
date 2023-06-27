@@ -143,7 +143,7 @@ public class AlpLog {
         let context = CoreDataManager.shared.persistentContainer?.viewContext
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let targetDateString = "2023-06-27"
+        let targetDateString = "2023-06-26"
 
         guard let targetDate = dateFormatter.date(from: targetDateString) else {
             fatalError("Failed to convert target date string to Date object.")
@@ -158,7 +158,7 @@ public class AlpLog {
         do {
             let logEntries = try context?.fetch(fetchRequest)
             
-            print("logEntries===",logEntries)
+            print("logEntries.count===",logEntries?.count)
             // Process the fetched log entries
             for logEntry in logEntries ?? [] {
                 let timestamp = logEntry.timestamp // Access the timestamp attribute

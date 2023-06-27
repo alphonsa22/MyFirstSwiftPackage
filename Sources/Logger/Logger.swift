@@ -160,7 +160,7 @@ public class AlpLog {
             
             print("logEntries===",logEntries)
             // Process the fetched log entries
-            for logEntry in logEntries {
+            for logEntry in logEntries ?? [] {
 //                let timestamp = logEntry.timestamp // Access the timestamp attribute
 //                let message = logEntry.message // Access the message attribute
 //

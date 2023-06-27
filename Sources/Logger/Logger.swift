@@ -97,8 +97,8 @@ public class AlpLog {
                 if(context!.hasChanges) {
                     try? context!.save()
                     try context!.parent?.save()
-//                    self.fetchLoggerList()
-                    self.fetchBasedOnSpecificDate()
+                    self.fetchLoggerList()
+//                    self.fetchBasedOnSpecificDate()
                 }
             } catch let error {
                 print("Failed To Save:",error)
@@ -119,22 +119,22 @@ public class AlpLog {
 
     private static func fetchLoggerList() -> [LoggerMDL] {
         
-        let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntityList.self)
+        let records = CoreDataManager.shared.fetchManagedObject(managedObject: LoggerEntity.self)
         print(records?.count)
 
         guard records != nil && records?.count != 0 else { return [] }
         
         var loggerMdlArry = [LoggerMDL]()
-        records!.forEach { item in
-//            print("item==",item.loggers ?? [])
-            let loggerItem = item.convertToLoggerList()
-//            loggerMdlArry.append()
-            for item in loggerItem.loggers ?? [] {
-                loggerMdlArry.append(item)
-            }
-        }
-        print("loggerMdlArry.count===",loggerMdlArry.count)
-        print("loggerMdlArry===",loggerMdlArry)
+//        records!.forEach { item in
+////            print("item==",item.loggers ?? [])
+//            let loggerItem = item.convertToLoggerList()
+////            loggerMdlArry.append()
+//            for item in loggerItem.loggers ?? [] {
+//                loggerMdlArry.append(item)
+//            }
+//        }
+//        print("loggerMdlArry.count===",loggerMdlArry.count)
+//        print("loggerMdlArry===",loggerMdlArry)
         return loggerMdlArry
     }
     

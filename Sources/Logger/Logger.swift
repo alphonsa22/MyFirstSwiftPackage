@@ -77,12 +77,12 @@ public class AlpLog {
     }
     
     private static func saveLogToDatabase(_ loggerArry: [LoggerMDL]) {
-        let context = CoreDataManager.shared.persistentContainer?.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         
             print("context===",context!)
         
         
-        CoreDataManager.shared.persistentContainer?.performBackgroundTask { newContext in
+        CoreDataManager.shared.persistentContainer.performBackgroundTask { newContext in
             
             let loggerEntityList = LoggerEntityList(context: context!)
             loggerEntityList.loggers = []
@@ -120,6 +120,15 @@ public class AlpLog {
             
         }
     }
+    
+    /*
+     
+     1. Fetch log data of a specific date
+     2. Fetch log data of a date range
+     3. Fetch all log data available in database
+     4. Clear all log entries
+     
+     */
     
 
     private static func fetchLoggerList() -> [LoggerMDL] {

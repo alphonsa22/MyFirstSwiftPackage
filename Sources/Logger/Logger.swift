@@ -77,30 +77,30 @@ public class AlpLog {
     }
     
     private static func saveLogToDatabase(_ loggerArry: [LoggerMDL]) {
-        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer?.viewContext
         
-        print("context===",context)
+            print("context===",context!)
         
         
-        CoreDataManager.shared.persistentContainer.performBackgroundTask { newContext in
+        CoreDataManager.shared.persistentContainer?.performBackgroundTask { newContext in
             
-            let loggerEntityList = LoggerEntityList(context: context)
+            let loggerEntityList = LoggerEntityList(context: context!)
             loggerEntityList.loggers = []
             loggerArry.forEach { item in
-                let perLogger = LoggerEntity(context: context)
+                let perLogger = LoggerEntity(context: context!)
                 perLogger.message = item.message
                 perLogger.timestamp = item.timestamp
                 perLogger.loggerlist = loggerEntityList
             }
             
-            CoreDataManager.shared.saveContext { status in
-                if status {
-                    print("Successfully saved log message")
-                    self.fetchLoggerList()
-                } else {
-                    print("error saving the log")
-                }
-            }
+//            CoreDataManager.shared.saveContext { status in
+//                if status {
+//                    print("Successfully saved log message")
+//                    self.fetchLoggerList()
+//                } else {
+//                    print("error saving the log")
+//                }
+//            }
             
 //            DispatchQueue.main.async {
 //                do {
@@ -116,7 +116,14 @@ public class AlpLog {
 //            }
             
             
-     
+            do {
+                if(context!.hasChanges) {
+                    try? context!.save()
+                    try context!.parent?.save()
+                }
+            } catch let error {
+                print("Failed To Save:",error)
+            }
             
         }
     }

@@ -93,34 +93,12 @@ public class AlpLog {
                 perLogger.loggerlist = loggerEntityList
             }
             
-//            CoreDataManager.shared.saveContext { status in
-//                if status {
-//                    print("Successfully saved log message")
-//                    self.fetchLoggerList()
-//                } else {
-//                    print("error saving the log")
-//                }
-//            }
-            
-//            DispatchQueue.main.async {
-//                do {
-//                    if(context!.hasChanges) {
-//                        try? context!.save()
-//                        try context!.parent?.save()
-//
-//    //                    self.fetchLoggerList()
-//                    }
-//                } catch let error {
-//                    print("Failed To Save:",error)
-//                }
-//            }
-            
-            
             do {
                 if(context!.hasChanges) {
                     try? context!.save()
                     try context!.parent?.save()
-                    self.fetchLoggerList()
+//                    self.fetchLoggerList()
+                    self.fetchBasedOnSpecificDate()
                 }
             } catch let error {
                 print("Failed To Save:",error)
@@ -160,6 +138,41 @@ public class AlpLog {
         return loggerMdlArry
     }
     
+    
+    private static func fetchBasedOnSpecificDate() {
+        let context = CoreDataManager.shared.persistentContainer?.viewContext
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let targetDateString = "2023-06-27"
+
+        guard let targetDate = dateFormatter.date(from: targetDateString) else {
+            fatalError("Failed to convert target date string to Date object.")
+        }
+        
+        let fetchRequest: NSFetchRequest<LoggerEntityList> = LoggerEntityList.fetchRequest()
+        let calendar = Calendar.current
+        let startDate = calendar.startOfDay(for: targetDate)
+        let endDate = calendar.date(byAdding: .day, value: 1, to: startDate)
+        fetchRequest.predicate = NSPredicate(format: "timestamp >= %@ AND timestamp < %@", startDate as NSDate, endDate! as NSDate)
+        
+        do {
+            let logEntries = try context?.fetch(fetchRequest)
+            
+            print("logEntries===",logEntries)
+            // Process the fetched log entries
+            for logEntry in logEntries {
+//                let timestamp = logEntry.timestamp // Access the timestamp attribute
+//                let message = logEntry.message // Access the message attribute
+//
+//                print("Timestamp: \(timestamp ?? ""), Message: \(message ?? "")")
+                
+                print(logEntry.loggers?.count)
+            }
+        } catch {
+            fatalError("Failed to fetch log entries: \(error)")
+        }
+
+    }
     
     
     // MARK: - Loging methods

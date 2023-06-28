@@ -103,8 +103,8 @@ public class AlpLog {
                 if(context!.hasChanges) {
                     try? context!.save()
                     try context!.parent?.save()
-                    self.fetchLoggerList()
-//                    self.fetchBasedOnSpecificDate()
+//                    self.fetchLoggerList()
+                    self.fetchBasedOnSpecificDate()
                 }
             } catch let error {
                 print("Failed To Save:",error)
@@ -149,7 +149,7 @@ public class AlpLog {
         let context = CoreDataManager.shared.persistentContainer?.viewContext
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let targetDateString = "2023-06-26"
+        let targetDateString = "2023-06-28"
 
         guard let targetDate = dateFormatter.date(from: targetDateString) else {
             fatalError("Failed to convert target date string to Date object.")

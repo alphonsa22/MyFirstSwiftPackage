@@ -85,10 +85,10 @@ public class AlpLog {
         
         CoreDataManager.shared.persistentContainer?.performBackgroundTask { newContext in
             
-            let loggerEntityList = LoggerEntityList(context: context!)
+            let loggerEntityList = LoggerEntityList(context: newContext)
             loggerEntityList.loggers = []
             loggerArry.forEach { item in
-                let perLogger = LoggerEntity(context: context!)
+                let perLogger = LoggerEntity(context: newContext)
                 let encryptedData = self.encryptMessage(item.message ?? "no message")
 
                 if let encryptedString = encryptedData?.base64EncodedString() {
@@ -100,9 +100,9 @@ public class AlpLog {
             }
             
             do {
-                if(context!.hasChanges) {
-                    try? context!.save()
-                    try context!.parent?.save()
+                if(newContext.hasChanges) {
+                    try? newContext.save()
+                    try newContext.parent?.save()
 //                    self.fetchLoggerList()
                     self.fetchBasedOnSpecificDate()
                 }

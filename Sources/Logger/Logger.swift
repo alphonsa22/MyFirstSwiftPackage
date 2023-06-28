@@ -227,8 +227,8 @@ public class AlpLog {
   //      AlpLog.writeLogToFile(log: "\(logObject) \n")
 //        CoreDataManager.shared.clearDatabase()
         
-//        AlpLog.saveLogToDatabase([LoggerMDL(timestamp: Date(), message: logObject)])
-        AlpLog.clearBD()
+        AlpLog.saveLogToDatabase([LoggerMDL(timestamp: Date(), message: logObject)])
+//        AlpLog.clearBD()
 //        getEntities()
         }
     

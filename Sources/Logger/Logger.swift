@@ -122,6 +122,10 @@ public class AlpLog {
      
      */
     
+    
+    private static func clearBD() {
+        CoreDataManager.shared.clearDatabase()
+    }
 
     private static func fetchLoggerList() -> [LoggerMDL] {
         
@@ -223,7 +227,8 @@ public class AlpLog {
   //      AlpLog.writeLogToFile(log: "\(logObject) \n")
 //        CoreDataManager.shared.clearDatabase()
         
-        AlpLog.saveLogToDatabase([LoggerMDL(timestamp: Date(), message: logObject)])
+//        AlpLog.saveLogToDatabase([LoggerMDL(timestamp: Date(), message: logObject)])
+        AlpLog.clearBD()
 //        getEntities()
         }
     

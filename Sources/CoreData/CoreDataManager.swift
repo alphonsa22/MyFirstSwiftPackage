@@ -113,6 +113,7 @@ struct CoreDataManager {
          do {
              try persistentStoreCoordinator?.destroyPersistentStore(at:url, ofType: NSSQLiteStoreType, options: nil)
              try persistentStoreCoordinator?.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+             print("successfully cleared the DB")
          } catch {
              print("Attempted to clear persistent store: " + error.localizedDescription)
          }

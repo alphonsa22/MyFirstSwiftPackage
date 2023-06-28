@@ -8,6 +8,7 @@
 import Foundation
 import os
 import CoreData
+import CommonCrypto
 
 public enum LogEvent: String {
     case error = "‼️ "
@@ -88,7 +89,12 @@ public class AlpLog {
             loggerEntityList.loggers = []
             loggerArry.forEach { item in
                 let perLogger = LoggerEntity(context: context!)
-                perLogger.message = item.message
+                let encryptedData = self.encryptMessage(item.message ?? "no message")
+
+                if let encryptedString = encryptedData?.base64EncodedString() {
+                    perLogger.message  = encryptedString
+                }
+//                perLogger.message = item.message
                 perLogger.timestamp = item.timestamp
                 perLogger.loggerlist = loggerEntityList
             }
@@ -97,8 +103,8 @@ public class AlpLog {
                 if(context!.hasChanges) {
                     try? context!.save()
                     try context!.parent?.save()
-//                    self.fetchLoggerList()
-                    self.fetchBasedOnSpecificDate()
+                    self.fetchLoggerList()
+//                    self.fetchBasedOnSpecificDate()
                 }
             } catch let error {
                 print("Failed To Save:",error)
@@ -172,6 +178,39 @@ public class AlpLog {
             fatalError("Failed to fetch log entries: \(error)")
         }
 
+    }
+    
+    
+  private static func encryptMessage(_ message: String) -> Data? {
+        guard let messageData = message.data(using: .utf8) else {
+            return nil
+        }
+        
+        var encryptedData = Data(count: messageData.count + kCCBlockSizeAES128)
+        let keyData = "YourEncryptionKey".data(using: .utf8)! // Replace with your own encryption key
+        
+        let status = encryptedData.withUnsafeMutableBytes { encryptedBytes in
+            messageData.withUnsafeBytes { messageBytes in
+                keyData.withUnsafeBytes { keyBytes in
+                    CCCrypt(
+                        CCOperation(kCCEncrypt),
+                        CCAlgorithm(kCCAlgorithmAES),
+                        CCOptions(kCCOptionPKCS7Padding),
+                        keyBytes.baseAddress, kCCKeySizeAES128,
+                        nil,
+                        messageBytes.baseAddress, messageBytes.count,
+                        encryptedBytes.baseAddress, encryptedBytes.count,
+                        nil
+                    )
+                }
+            }
+        }
+        
+        guard status == kCCSuccess else {
+            return nil
+        }
+        
+        return encryptedData
     }
     
     

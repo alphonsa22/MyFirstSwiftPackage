@@ -103,8 +103,8 @@ public class AlpLog {
                 if(newContext.hasChanges) {
                     try? newContext.save()
                     try newContext.parent?.save()
-//                    self.fetchLoggerList()
-                    self.fetchBasedOnSpecificDate()
+                    self.fetchLoggerList()
+//                    self.fetchBasedOnSpecificDate()
                 }
             } catch let error {
                 print("Failed To Save:",error)

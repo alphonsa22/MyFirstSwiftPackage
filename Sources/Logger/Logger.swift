@@ -135,16 +135,21 @@ public class AlpLog {
         guard records != nil && records?.count != 0 else { return [] }
         
         var loggerMdlArry = [LoggerMDL]()
-//        records!.forEach { item in
-////            print("item==",item.loggers ?? [])
+        records!.forEach { item in
+//            print("item==",item.loggers ?? [])
 //            let loggerItem = item.convertToLoggerList()
-////            loggerMdlArry.append()
-//            for item in loggerItem.loggers ?? [] {
+//            loggerMdlArry.append()
+//            for item in loggerItem ?? [] {
 //                loggerMdlArry.append(item)
 //            }
-//        }
-//        print("loggerMdlArry.count===",loggerMdlArry.count)
-//        print("loggerMdlArry===",loggerMdlArry)
+            
+            let timestamp = item.timestamp
+            let message = self.decryptData(Data(base64Encoded: item.message ?? "") ?? Data())
+           
+            loggerMdlArry.append(LoggerMDL(timestamp: timestamp, message: message))
+        }
+        print("loggerMdlArry.count===",loggerMdlArry.count)
+        print("loggerMdlArry===",loggerMdlArry)
         return loggerMdlArry
     }
     
@@ -419,6 +424,37 @@ public class AlpLog {
         }
     }
     
+  public static func decryptData(_ data: Data) -> String? {
+        let keyData = "YourEncryptionKey".data(using: .utf8)! // Replace with your own encryption key
+        
+        var decryptedData = Data(count: data.count)
+        let status = decryptedData.withUnsafeMutableBytes { decryptedBytes in
+            data.withUnsafeBytes { encryptedBytes in
+                keyData.withUnsafeBytes { keyBytes in
+                    CCCrypt(
+                        CCOperation(kCCDecrypt),
+                        CCAlgorithm(kCCAlgorithmAES),
+                        CCOptions(kCCOptionPKCS7Padding),
+                        keyBytes.baseAddress, kCCKeySizeAES128,
+                        nil,
+                        encryptedBytes.baseAddress, encryptedBytes.count,
+                        decryptedBytes.baseAddress, decryptedBytes.count,
+                        nil
+                    )
+                }
+            }
+        }
+        
+        guard status == kCCSuccess else {
+            return nil
+        }
+        
+        guard let decryptedString = String(data: decryptedData, encoding: .utf8) else {
+            return nil
+        }
+        
+        return decryptedString
+    }
 
     
 

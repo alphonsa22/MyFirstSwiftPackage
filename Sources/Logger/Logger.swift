@@ -93,7 +93,7 @@ public class AlpLog {
             loggerArry.forEach { item in
                 let perLogger = LoggerEntity(context: newContext)
                 let encryptedMessage = self.encryptString(string: item.message ?? "", key: AlpLog.encryptionKey, iv: AlpLog.initializationVector)
-
+            print("encryptedMessage====",encryptedMessage)
                
                 perLogger.message = encryptedMessage
                 perLogger.timestamp = item.timestamp

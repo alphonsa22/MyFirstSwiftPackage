@@ -52,6 +52,9 @@ public class AlpLog {
         return false
         #endif
     }
+    
+    static let encryptionKey = "abcdefghijklmnop"
+    static let initializationVector = "1234567890abcdef"
       
     func getEntities() {
         let bundle = Bundle.module
@@ -89,12 +92,10 @@ public class AlpLog {
             loggerEntityList.loggers = []
             loggerArry.forEach { item in
                 let perLogger = LoggerEntity(context: newContext)
-                let encryptedData = self.encryptMessage(item.message ?? "no message")
+                let encryptedMessage = self.encryptString(string: item.message ?? "", key: AlpLog.encryptionKey, iv: AlpLog.initializationVector)
 
-                if let encryptedString = encryptedData?.base64EncodedString() {
-                    perLogger.message  = encryptedString
-                }
-//                perLogger.message = item.message
+               
+                perLogger.message = encryptedMessage
                 perLogger.timestamp = item.timestamp
                 perLogger.loggerlist = loggerEntityList
             }
@@ -144,7 +145,7 @@ public class AlpLog {
 //            }
             
             let timestamp = item.timestamp
-            let message = self.decryptData(Data(base64Encoded: item.message ?? "") ?? Data())
+            let message = self.decryptString(string: item.message ?? "", key: self.encryptionKey, iv: self.initializationVector)
            
             loggerMdlArry.append(LoggerMDL(timestamp: timestamp, message: message))
         }
@@ -190,36 +191,87 @@ public class AlpLog {
     }
     
     
-  private static func encryptMessage(_ message: String) -> Data? {
-        guard let messageData = message.data(using: .utf8) else {
-            return nil
-        }
+
+  private static func encryptString(string: String, key: String, iv: String) -> String? {
+        guard let data = string.data(using: .utf8) else { return nil }
         
-        var encryptedData = Data(count: messageData.count + kCCBlockSizeAES128)
-        let keyData = "YourEncryptionKey".data(using: .utf8)! // Replace with your own encryption key
+        let keyData = key.data(using: .utf8)!
+        let ivData = iv.data(using: .utf8)!
         
-        let status = encryptedData.withUnsafeMutableBytes { encryptedBytes in
-            messageData.withUnsafeBytes { messageBytes in
-                keyData.withUnsafeBytes { keyBytes in
-                    CCCrypt(
-                        CCOperation(kCCEncrypt),
-                        CCAlgorithm(kCCAlgorithmAES),
-                        CCOptions(kCCOptionPKCS7Padding),
-                        keyBytes.baseAddress, kCCKeySizeAES128,
-                        nil,
-                        messageBytes.baseAddress, messageBytes.count,
-                        encryptedBytes.baseAddress, encryptedBytes.count,
-                        nil
-                    )
+        let cryptLength = size_t(data.count + kCCBlockSizeAES128)
+        var cryptData = Data(count: cryptLength)
+        
+        let keyLength = size_t(kCCKeySizeAES128)
+        let options = CCOptions(kCCOptionPKCS7Padding)
+        
+        var numBytesEncrypted: size_t = 0
+        
+        let cryptStatus = cryptData.withUnsafeMutableBytes { cryptBytes in
+            data.withUnsafeBytes { dataBytes in
+                ivData.withUnsafeBytes { ivBytes in
+                    keyData.withUnsafeBytes { keyBytes in
+                        CCCrypt(CCOperation(kCCEncrypt),
+                                CCAlgorithm(kCCAlgorithmAES),
+                                options,
+                                keyBytes.baseAddress,
+                                keyLength,
+                                ivBytes.baseAddress,
+                                dataBytes.baseAddress,
+                                data.count,
+                                cryptBytes.baseAddress,
+                                cryptLength,
+                                &numBytesEncrypted)
+                    }
                 }
             }
         }
         
-        guard status == kCCSuccess else {
-            return nil
+        guard cryptStatus == kCCSuccess else { return nil }
+        
+        cryptData.removeSubrange(numBytesEncrypted..<cryptData.count)
+        
+        return cryptData.base64EncodedString()
+    }
+
+  private static func decryptString(string: String, key: String, iv: String) -> String? {
+        guard let data = Data(base64Encoded: string) else { return nil }
+        
+        let keyData = key.data(using: .utf8)!
+        let ivData = iv.data(using: .utf8)!
+        
+        let cryptLength = size_t(data.count + kCCBlockSizeAES128)
+        var cryptData = Data(count: cryptLength)
+        
+        let keyLength = size_t(kCCKeySizeAES128)
+        let options = CCOptions(kCCOptionPKCS7Padding)
+        
+        var numBytesDecrypted: size_t = 0
+        
+        let cryptStatus = cryptData.withUnsafeMutableBytes { cryptBytes in
+            data.withUnsafeBytes { dataBytes in
+                ivData.withUnsafeBytes { ivBytes in
+                    keyData.withUnsafeBytes { keyBytes in
+                        CCCrypt(CCOperation(kCCDecrypt),
+                                CCAlgorithm(kCCAlgorithmAES),
+                                options,
+                                keyBytes.baseAddress,
+                                keyLength,
+                                ivBytes.baseAddress,
+                                dataBytes.baseAddress,
+                                data.count,
+                                cryptBytes.baseAddress,
+                                cryptLength,
+                                &numBytesDecrypted)
+                    }
+                }
+            }
         }
         
-        return encryptedData
+        guard cryptStatus == kCCSuccess else { return nil }
+        
+        cryptData.removeSubrange(numBytesDecrypted..<cryptData.count)
+        
+        return String(data: cryptData, encoding: .utf8)
     }
     
     
